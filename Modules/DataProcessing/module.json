@@ -1,0 +1,13 @@
+{
+    "name": "DataProcessing",
+    "alias": "dataprocessing",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\DataProcessing\\Providers\\DataProcessingServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

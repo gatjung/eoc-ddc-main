@@ -1,0 +1,13 @@
+{
+    "name": "TimeAttendance",
+    "alias": "timeattendance",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\TimeAttendance\\Providers\\TimeAttendanceServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

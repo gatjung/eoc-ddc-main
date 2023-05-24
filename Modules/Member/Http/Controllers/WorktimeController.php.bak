@@ -1,0 +1,101 @@
+<?php
+
+namespace Modules\Member\Http\Controllers;
+
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\member;
+use App\ChkIO;
+
+
+class WorktimeController extends Controller
+{
+
+  // public function work_io()
+  // {
+  //     return view('member::frontend.work_io');
+  // }
+  //
+
+  public function work_io()
+  {
+    // $query = member::select('id', 'prefix_th', 'name_th', 'lname_th')->orderby('id','ASC')->get();
+    // $query = ChkIO::select('chk_in', 'chk_out', 'create_io')->post();
+    $id = Auth::user()->id;
+    $his_work  = DB::table('his_work')
+    ->select(
+            'his_work.id',
+            'his_work.users_id',
+            'his_work.chk_in',
+            'his_work.chk_out',
+            'his_work.created_at',
+            'his_work.updated_at',
+            'users.name_th as fname',
+            'users.lname_th',
+            'users.prefix_th',
+            'users.id',
+            'ref_prefix.id',
+            'ref_prefix.name_th')
+    ->leftJoin('users','users.id','=','his_work.users_id')
+    ->leftJoin('ref_prefix','ref_prefix.id','=','users.prefix_th')
+    ->where('his_work.users_id',$id)->orderby('his_work.id','DESC')
+    ->get();
+
+    $his_work2  = ChkIO::select()->first();
+
+    $last_id = ChkIO::latest()->first()->id;
+
+    dd($last_id);
+
+    return view('member::frontend.work_io',
+    [
+      "his_work" => $his_work,
+      "his_work2" => $his_work2,
+      "last_id" => $last_id
+
+    ]);
+  }
+
+
+  //Insert Save
+  public function insert(Request $request){
+    // dd($request);
+
+      $insert = new ChkIO; //ChkIO ประกาศ object Model
+      $insert->users_id = $request->users_id;
+      $insert->chk_in = $request->chk_in;
+      $insert->save();
+
+      if($insert->save()){
+          return redirect()->back()->with('success1','เพิ่มข้อมูลสำเร็จ');
+      }else{
+          return redirect()->back()->with('success2','บันทึกแล้ว');
+      }
+  }
+
+
+
+  public function update(Request $request)
+  {
+      // dd($request);
+      // $last_id = ChkIO::latest()->first()->id;
+      // dd($last_id);
+      $update = ChkIO::where('id',$request->id)->update(array(
+          'chk_out'=>$request->chk_out
+
+      ));
+
+      if($update){
+          return redirect()->back()->with('message', "แก้ไขข้อมูล สำเร็จ");
+      }else{
+          return redirect()->back()->with('message', "แก้ไขข้อมูล ไม่สำเร็จ");
+      }
+  }
+
+
+
+}

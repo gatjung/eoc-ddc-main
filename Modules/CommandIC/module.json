@@ -1,0 +1,13 @@
+{
+    "name": "CommandIC",
+    "alias": "commandic",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CommandIC\\Providers\\CommandICServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

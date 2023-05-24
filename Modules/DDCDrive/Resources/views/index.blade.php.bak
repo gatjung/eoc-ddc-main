@@ -1,0 +1,166 @@
+@extends('ddcdrive::layouts.master')
+@section('custom-css-script')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('bower_components/select2/dist/css/select2.min.css') }}">
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+@stop
+@section('custom-css')
+@stop
+@section('content')
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>DDC-Drive (ระบบแชร์ไฟล์ภายในกรม)</h1>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6">
+        @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong> <i class="far fa-check-circle"></i>
+        </div>
+        @endif
+
+        @if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong> <i class="fas fa-times-circle"></i>
+        </div>
+        @endif
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <form class="form-inline" action="{{ route('ddcdrive.act_upload_file') }}" method="post" enctype="multipart/form-data">
+                  @csrf
+                  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">กรุณาเลือกไฟล์</label>
+                  <input type="file" id="customFile" name="customFile" class="mr-2" required>
+                  <input type="text" autocomplete="off" maxlength="150" class="form-control mr-2 col-4" name="files_description" placeholder="รายละเอียดหรือคำอธิบายของไฟล์" />
+                  <button type="submit" class="btn btn-success my-1"><i class="fas fa-cloud-upload-alt"></i> อัพโหลดไฟล์</button>
+                </form>
+              </div>
+            </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-12">
+            <div class="card card-primary card-outline card-outline-tabs">
+              <div class="card-header p-0 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true"><i class="fas fa-folder-open"></i> ไฟล์ของฉัน</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill" href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fas fa-share-alt"></i> ไฟล์แชร์ถึงฉัน</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false"><i class="fas fa-users"></i> ไฟล์แชร์กลุ่มงานของฉัน</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="custom-tabs-four-tabContent">
+                  <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+                     @include('ddcdrive::data-table-layout.my_files_upload')
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+                     Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam.
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                     Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam.
+                  </div>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+    </div>
+  </div>
+</section>
+@endsection
+@section('custom-js-script')
+<!-- DataTables -->
+<script src="{{ asset('bower_components/admin-lte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('bower_components/admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('bower_components/select2/dist/js/select2.full.js') }}"></script>
+@stop
+@section('custom-js-code')
+<!-- page script -->
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $("#selUser").select2({
+      placeholder: "Search for an Item",
+      minimumInputLength: 2,
+      minimumResultsForSearch: 10,
+      ajax: {
+       url: "{{ route('ddcdrive.ajax.get.user.all') }}",
+       type: "GET",
+       dataType: 'json',
+       delay: 250,
+       data: function (params) {
+        return {
+          searchTerm: params.term // search term
+        };
+       },
+       processResults: function (response) {
+         return {
+            results: response
+         };
+       },
+       cache: true
+      }
+    });
+
+    $('[data-toggle="tooltip"]').tooltip()
+    $('#my_files_upload').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "language": {
+              "sProcessing": "กำลังดำเนินการ...",
+              "sLengthMenu": "แสดง_MENU_ แถว",
+              "sZeroRecords": "ไม่พบข้อมูล",
+              "sInfo": "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+              "sInfoEmpty": "แสดง 0 ถึง 0 จาก 0 แถว",
+              "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
+              "sInfoPostFix": "",
+              "sSearch": "ค้นหา:",
+              "sUrl": "",
+              "oPaginate": {
+                            "sFirst": "เิริ่มต้น",
+                            "sPrevious": "ก่อนหน้า",
+                            "sNext": "ถัดไป",
+                            "sLast": "สุดท้าย"
+              }
+     }
+    });
+
+    $('#my-modal').on('show.bs.modal', function (event) {
+      var filename = $(event.relatedTarget).data('val');
+      var detail = $(event.relatedTarget).data('detail');
+      var text_show = filename+" ("+detail+")";
+      $(this).find(".modal-body .file-name").text(text_show);
+      
+    });
+
+  });
+</script>
+@stop

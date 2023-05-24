@@ -1,0 +1,16 @@
+{
+    "Task": true,
+    "Chatroom": true,
+    "Member": true,
+    "Exchange": true,
+    "Meeting": true,
+    "Msg": true,
+    "DataProcessing": true,
+    "Hr": true,
+    "TimeAttendance": true,
+    "Assign": true,
+    "DDCDrive": true,
+    "Admin": true,
+    "Feedback": true,
+    "CommandIC": true
+}

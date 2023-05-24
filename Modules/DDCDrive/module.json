@@ -1,0 +1,13 @@
+{
+    "name": "DDCDrive",
+    "alias": "ddcdrive",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\DDCDrive\\Providers\\DDCDriveServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

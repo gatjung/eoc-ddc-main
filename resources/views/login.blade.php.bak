@@ -1,0 +1,326 @@
+@extends('layouts.master')
+@section('content')
+<style type="text/css">
+	.ba-we-love-subscribers {
+		width: 350px;
+		height: 50px;
+		background-color: #fff;
+		border-radius: 15px;
+		box-shadow: 0px 12px 45px rgba(0, 0, 0, .15);
+		text-align: center;
+		margin: 0 0 10px 0;
+		overflow: hidden;
+		opacity: 0;
+	}
+	.ba-we-love-subscribers.open {
+		height: 450px;
+		opacity: 1;
+	}
+	.ba-we-love-subscribers.popup-ani {
+		-webkit-transition: all .8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		transition: all .8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+	.ba-we-love-subscribers h1 {
+		font-size: 20px;
+		color: #757575;
+		padding: 25px 0;
+		margin: 0;
+	  	font-weight:400;
+
+	}
+	.ba-we-love-subscribers .love {
+		width: 20px;
+		height: 20px;
+		background-position: 35px 84px;
+		display: inline-block;
+		margin: 0 6px;
+		background-size: 62px;
+	}
+	.ba-we-love-subscribers .ba-logo {
+		width: 65px;
+		height: 25px;
+		background-position: 0px;
+		margin: 0 auto;
+		opacity: .5;
+		cursor: pointer;
+	}
+	.ba-we-love-subscribers .ba-logo:hover {
+		opacity: 1;
+	}
+	.logo-ani {
+		transition: 0.5s linear;
+		-webkit-transition: 0.5s linear;
+	}
+	.ba-we-love-subscribers input {
+		font-size: 14px;
+		padding: 12px 15px;
+		border-radius: 15px;
+		border: 3;
+		outline: none;
+		margin: 8px 0;
+		width: 100%;
+		box-sizing: border-box;
+		line-height: normal;
+		/*Bootstrap Overide*/
+		font-family: sans-serif;
+		/*Bootstrap Overide*/
+	}
+	.ba-we-love-subscribers form {
+		padding: 5px 30px 0;
+		margin-bottom: 15px;
+	}
+	.ba-we-love-subscribers input[name="email"] {
+		background-color: #eee;
+	}
+	.ba-we-love-subscribers input[name="submit"] {
+		background-color: #00aeef;
+		cursor: pointer;
+		color: #fff;
+	}
+	.ba-we-love-subscribers input[name="submit"]:hover {
+		background-color: #26baf1;
+	}
+	.ba-we-love-subscribers .img {
+		background-image: url("https://4.bp.blogspot.com/-1J75Et4_5vc/WAYhWRVuMiI/AAAAAAAAArE/gwa-mdtq0NIqOrlVvpLAqdPTV4VAahMsQCPcB/s1600/barrel-we-love-subscribers-img.png");
+	}
+	.ba-we-love-subscribers-fab {
+		width: 65px;
+		height: 65px;
+		background-color: #00aeef;
+		border-radius: 30px;
+		float: right;
+		box-shadow: 0px 12px 45px rgba(0, 0, 0, .3);
+		z-index: 5;
+		position: relative;
+	}
+	.ba-we-love-subscribers-fab .img-fab {
+		height: 30px;
+		width: 30px;
+		margin: 15px auto;
+		background-image: url("https://4.bp.blogspot.com/-1J75Et4_5vc/WAYhWRVuMiI/AAAAAAAAArE/gwa-mdtq0NIqOrlVvpLAqdPTV4VAahMsQCPcB/s1600/barrel-we-love-subscribers-img.png");
+		background-position: -1px -53px;
+	}
+	.ba-we-love-subscribers-fab .wrap {
+		transform: rotate(0deg);
+		-webkit-transition: all .15s cubic-bezier(0.15, 0.87, 0.45, 1.23);
+		transition: all .15s cubic-bezier(0.15, 0.87, 0.45, 1.23);
+	}
+	.ba-we-love-subscribers-fab .ani {
+		transform: rotate(45deg);
+		-webkit-transition: all .15s cubic-bezier(0.15, 0.87, 0.45, 1.23);
+		transition: all .15s cubic-bezier(0.15, 0.87, 0.45, 1.23);
+	}
+	.ba-we-love-subscribers-fab .close {
+		background-position: -2px 1px;
+		transform: rotate(-45deg);
+		float: none;
+		/*Bootstrap Overide*/
+		opacity: 1;
+		/*Bootstrap Overide*/
+	}
+	.ba-we-love-subscribers-wrap {
+		position: fixed;
+		right: 25px;
+		bottom: 25px;
+		z-index: 1000;
+	}
+	.ba-settings {
+		position: absolute;
+		top: -25px;
+		right: 0px;
+		padding: 10px 20px;
+		background-color: #555;
+		border-radius: 5px;
+		color: #fff;
+	}
+	.form-control {
+	  display: block;
+	  width: 100%;
+	  height: calc(2.25rem + 2px);
+	  padding: 0.375rem 0.75rem;
+	  font-size: 1rem;
+	  font-weight: 400;
+	  line-height: 1.5;
+	  color: #495057;
+	  background-color: #ffffff;
+	  background-clip: padding-box;
+	  border: 1px solid #ced4da;
+	  border-radius: 0.25rem;
+	  box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+	  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	}
+	textarea.form-control {
+	  height: auto;
+	}
+	.custom-file {
+	  position: relative;
+	  display: inline-block;
+	  width: 100%;
+	  height: calc(2.25rem + 2px);
+	  margin-bottom: 0;
+	}
+
+	.custom-file-input {
+	  position: relative;
+	  z-index: 2;
+	  width: 100%;
+	  height: calc(2.25rem + 2px);
+	  margin: 0;
+	  opacity: 0;
+	}
+	.custom-file-label {
+	  position: absolute;
+	  top: 0;
+	  right: 0;
+	  left: 0;
+	  z-index: 1;
+	  height: calc(2.25rem + 2px);
+	  padding: 0.375rem 0.75rem;
+	  font-weight: 400;
+	  line-height: 1.5;
+	  color: #495057;
+	  background-color: #ffffff;
+	  border: 1px solid #ced4da;
+	  border-radius: 0.25rem;
+	  box-shadow: none;
+	}
+	.custom-file-label::after {
+	  position: absolute;
+	  top: 0;
+	  right: 0;
+	  bottom: 0;
+	  z-index: 3;
+	  display: block;
+	  height: 2.25rem;
+	  padding: 0.375rem 0.75rem;
+	  line-height: 1.5;
+	  color: #495057;
+	  content: "Browse";
+	  background-color: #e9ecef;
+	  border-left: inherit;
+	  border-radius: 0 0.25rem 0.25rem 0;
+	}
+	.custom-file-input {
+	  position: relative;
+	  z-index: 2;
+	  width: 100%;
+	  height: calc(2.25rem + 2px);
+	  margin: 0;
+	  opacity: 0;
+	}
+
+</style>
+
+<div id="large-header" class="large-header">
+	<canvas id="demo-canvas"></canvas>
+
+	<div class="limiter main-title">
+		<div class="container-login100 w3-animate-top">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<img src="{{ asset('img/ddc_logo_250.png') }}" class="w3-image">
+				<span class="login100-form-title p-b-49">ECOSYSTEM</span>
+				<form class="login100-form" method="POST" action="{{ route('login') }}">
+					@csrf
+					<div class="wrap-input100 m-b-23">
+						<label class="w3-left w3-text-black">ชื่อผู้ใช้</label>
+						<input class="input100 @error('username') is-invalid @enderror" type="text" name="username" value="{{ old('username') }}" placeholder="" required autocomplete="username" autofocus>
+                        @error('username')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+						<span class="focus-input100" data-symbol="🤵"></span>
+					</div>
+
+					<div class="wrap-input100">
+						<label class="w3-left w3-text-black">รหัสผ่าน</label>
+						<input class="input100 @error('password') is-invalid @enderror" type="password" name="password" placeholder="" required autocomplete="current-password">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+						<span class="focus-input100" data-symbol="🔑"></span>
+					</div>
+
+					@if(session()->has('success'))
+					    <div class="alert alert-success w3-text-green" style="margin-top: 20px;">
+					        {{ session()->get('success') }}
+					    </div>
+					@endif
+
+					@if(session()->has('error'))
+					    <div class="alert alert-danger w3-text-red" style="margin-top: 20px;">
+					        {{ session()->get('error') }}
+					    </div>
+					@endif
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn" style="margin-top: 20px;">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" type="submit">เข้าสู่ระบบ</button>
+						</div>
+					</div>
+				</form>
+				<div class="container-login100-form-btn">
+					<div class="wrap-login100-form-btn" style="margin-top: 10px;">
+						<div class="login100-form-bgbtn"></div>
+						<button class="login100-form-btn" onclick="window.location='{{ url("member/register") }}'">สมัครสมาชิก</button>
+					</div>
+
+					<div class="w3-right-align w3-text-black" style="margin-top: 10px;">
+						<div><a href="{{ route('resetpass.ecosystem') }}">ลืมรหัสผ่าน</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="ba-we-love-subscribers-wrap">
+	<div class="ba-we-love-subscribers popup-ani">
+		<header>
+			<h1 style="font-family:Sarabun;">ข้อเสนอแนะ</h1>
+		</header>
+		<form method="post" action="{{ route('feedback.store') }}" enctype="multipart/form-data">
+			@csrf
+			ชื่อ-นามสกุล
+			<input type="text" class="logo-ani" name="name" style="border: 1px solid black;" required>
+			<textarea  class="form-control" style="width: 100%;" rows="5" name="description" required></textarea>
+			<div class="form-group" style="padding-top: 10px;">
+				<label for="InputFile">อัพโหลดไฟล์แนบ</label>
+				<div class="input-group">
+	            	<div class="custom-file">
+						<input type="file" class="custom-file-input" id="InputFile" name="file_name">
+						<label class="custom-file-label" for="InputFile" style="text-align: left;">แนบไฟล์</label>
+						<input type="hidden" name="page" value="login">
+					</div>
+				</div>
+			</div>
+
+			<input name="submit" class="btn btn-primary" type="submit" value="ส่ง">
+		</form>
+		
+	</div>
+	<div class="ba-we-love-subscribers-fab">
+		<div class="wrap">
+			<div class="img-fab img"></div>
+		</div>
+	</div>
+</div>
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script>
+	$(".ba-we-love-subscribers-fab").click(function() {
+		$('.ba-we-love-subscribers-fab .wrap').toggleClass("ani");
+		$('.ba-we-love-subscribers').toggleClass("open");
+		$('.img-fab.img').toggleClass("close");
+	});
+</script>
+
+<script src="{{ asset('js/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+      bsCustomFileInput.init();
+    });
+</script>
+@endsection
