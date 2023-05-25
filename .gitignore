@@ -29,6 +29,6 @@ package-lock.json
 /storage/debugbar/*
 /storage/framework/cache/*
 /storage/framework/sessions/*
-/storage/framework/view/*
+/storage/framework/views/*
 /storage/logs/*
 
